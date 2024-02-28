@@ -3,12 +3,13 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_AUTH_DOMAIN',
-  projectId: 'tgbot-8e6b9',
-  storageBucket: 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  appId: 'YOUR_APP_ID',
+  apiKey: 'AIzaSyA9hto2IWB71p6yHEXZcsmtKfxJd5Is93E',
+  authDomain: 'tgbots-ca48a.firebaseapp.com',
+  projectId: 'tgbots-ca48a',
+  storageBucket: 'tgbots-ca48a.appspot.com',
+  messagingSenderId: '246834518525',
+  appId: '1:246834518525:web:72d909e3e45b4294d36194',
+  measurementId: 'G-R13NMDEJTM',
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
