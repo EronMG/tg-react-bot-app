@@ -1,18 +1,60 @@
-import { useEffect } from 'react';
+// App.js
+
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { database, auth } from './firebase';
+import 'firebase/database';
 import './App.css';
 
 const tg = window.Telegram.WebApp;
 
 function App() {
+  const [userId, setUserId] = useState(null);
+  const [points, setPoints] = useState(0);
+
   useEffect(() => {
-    tg.ready();
-  }, []);
-  const onClose = () => {
-    tg.close();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+
+        const userRef = database.ref(`users/${user.uid}`);
+        userRef.once('value').then((snapshot) => {
+          if (!snapshot.exists()) {
+            userRef.set({
+              points: 0,
+              // Другие данные о пользователе, которые вы хотите сохранить
+            });
+          }
+        });
+
+        const pointsRef = userRef.child('points');
+        pointsRef.on('value', (snapshot) => {
+          const data = snapshot.val();
+          setPoints(data || 0);
+        });
+
+        tg.ready();
+      }
+    });
+
+    return () => {
+      if (userId) {
+        database.ref(`users/${userId}/points`).off();
+      }
+    };
+  }, [userId]);
+
+  const onStartGame = () => {
+    // Дополнительная логика начала игры
+    // Например, отправка сообщения, подготовка игровых данных и т.д.
+    // Здесь можно обновить данные в базе данных, если это необходимо
+    // Например, установить флаг начала игры
   };
+
   return (
     <div className='App'>
-      Work <button onClick={onClose}> Закрыть </button>
+      Work <button onClick={onStartGame}> Играть </button>
+      <p>Points: {points}</p>
     </div>
   );
 }
