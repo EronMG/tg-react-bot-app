@@ -1,5 +1,3 @@
-// App.js
-
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { database, auth } from './firebase';
