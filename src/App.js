@@ -1,8 +1,7 @@
 // App.js
 
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { database, auth } from './firebase';
+import firebase from './firebase'; // Путь к вашему файлу firebase.js
 import 'firebase/database';
 import './App.css';
 
@@ -13,33 +12,21 @@ function App() {
   const [points, setPoints] = useState(0);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-
-        const userRef = database.ref(`users/${user.uid}`);
-        userRef.once('value').then((snapshot) => {
-          if (!snapshot.exists()) {
-            userRef.set({
-              points: 0,
-              // Другие данные о пользователе, которые вы хотите сохранить
-            });
-          }
-        });
-
-        const pointsRef = userRef.child('points');
-        pointsRef.on('value', (snapshot) => {
-          const data = snapshot.val();
-          setPoints(data || 0);
-        });
-
-        tg.ready();
-      }
-    });
+    // Подписка на изменения в базе данных для текущего пользователя
+    if (userId) {
+      const userRef = firebase.database().ref(`users/${userId}`);
+      userRef.on('value', (snapshot) => {
+        const userData = snapshot.val();
+        if (userData) {
+          setPoints(userData.points || 0);
+        }
+      });
+    }
 
     return () => {
+      // Отписка от изменений при размонтировании компонента
       if (userId) {
-        database.ref(`users/${userId}/points`).off();
+        firebase.database().ref(`users/${userId}`).off();
       }
     };
   }, [userId]);
@@ -54,7 +41,7 @@ function App() {
   const onAddPoints = () => {
     // Увеличиваем поинты при нажатии на кнопку
     if (userId) {
-      const userRef = database.ref(`users/${userId}`);
+      const userRef = firebase.database().ref(`users/${userId}`);
       const pointsRef = userRef.child('points');
       pointsRef.transaction((currentPoints) => (currentPoints || 0) + 1);
     }
@@ -62,7 +49,8 @@ function App() {
 
   return (
     <div className='App'>
-      Work <button onClick={onStartGame}> Играть </button>
+      Work
+      <button onClick={onStartGame}> Играть </button>
       <button onClick={onAddPoints}> Добавить очки </button>
       <p>Points: {points}</p>
     </div>
