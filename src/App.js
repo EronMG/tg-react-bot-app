@@ -49,7 +49,7 @@ function App() {
 
   return (
     <div className='App'>
-      Work
+      Work12
       <button onClick={onStartGame}> Играть </button>
       <button onClick={onAddPoints}> Добавить очки </button>
       <p>Points: {points}</p>
