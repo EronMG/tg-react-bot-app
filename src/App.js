@@ -51,9 +51,19 @@ function App() {
     // Например, установить флаг начала игры
   };
 
+  const onAddPoints = () => {
+    // Увеличиваем поинты при нажатии на кнопку
+    if (userId) {
+      const userRef = database.ref(`users/${userId}`);
+      const pointsRef = userRef.child('points');
+      pointsRef.transaction((currentPoints) => (currentPoints || 0) + 1);
+    }
+  };
+
   return (
     <div className='App'>
       Work <button onClick={onStartGame}> Играть </button>
+      <button onClick={onAddPoints}> Добавить очки </button>
       <p>Points: {points}</p>
     </div>
   );
