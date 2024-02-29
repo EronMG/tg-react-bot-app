@@ -16,19 +16,9 @@ function App() {
         setUserId(user.uid);
 
         const userRef = database.ref(`users/${user.uid}`);
-        userRef.transaction((userData) => {
-          if (!userData) {
-            // Если пользователь только создан, установим начальные данные
-            return {
-              points: 0,
-              // Другие данные о пользователе, которые вы хотите сохранить
-            };
-          }
-          // Если пользователь уже существует, оставим данные без изменений
-          return userData;
-        });
-
         const pointsRef = userRef.child('points');
+
+        // Отслеживаем изменения в количестве очков
         pointsRef.on('value', (snapshot) => {
           const data = snapshot.val();
           setPoints(data || 0);
@@ -57,14 +47,15 @@ function App() {
     if (userId) {
       const userRef = database.ref(`users/${userId}`);
       const pointsRef = userRef.child('points');
+
+      // Транзакция для безопасного изменения значения поинтов
       pointsRef.transaction((currentPoints) => (currentPoints || 0) + 1);
     }
   };
 
   return (
     <div className='App'>
-      Work
-      <button onClick={onStartGame}> Играть </button>
+      Work <button onClick={onStartGame}> Играть </button>
       <button onClick={onAddPoints}> Добавить очки </button>
       <p>Points: {points}</p>
     </div>

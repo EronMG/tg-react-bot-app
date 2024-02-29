@@ -5,6 +5,7 @@ import { getDatabase } from 'firebase/database';
 const firebaseConfig = {
   apiKey: 'AIzaSyA9hto2IWB71p6yHEXZcsmtKfxJd5Is93E',
   authDomain: 'tgbots-ca48a.firebaseapp.com',
+  databaseURL: 'https://tgbots-ca48a-default-rtdb.firebaseio.com',
   projectId: 'tgbots-ca48a',
   storageBucket: 'tgbots-ca48a.appspot.com',
   messagingSenderId: '246834518525',
