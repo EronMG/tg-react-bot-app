@@ -16,13 +16,16 @@ function App() {
         setUserId(user.uid);
 
         const userRef = database.ref(`users/${user.uid}`);
-        userRef.once('value').then((snapshot) => {
-          if (!snapshot.exists()) {
-            userRef.set({
+        userRef.transaction((userData) => {
+          if (!userData) {
+            // Если пользователь только создан, установим начальные данные
+            return {
               points: 0,
               // Другие данные о пользователе, которые вы хотите сохранить
-            });
+            };
           }
+          // Если пользователь уже существует, оставим данные без изменений
+          return userData;
         });
 
         const pointsRef = userRef.child('points');
