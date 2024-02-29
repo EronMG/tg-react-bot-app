@@ -60,7 +60,8 @@ function App() {
 
   return (
     <div className='App'>
-      Work <button onClick={onStartGame}> Играть </button>
+      Work
+      <button onClick={onStartGame}> Играть </button>
       <button onClick={onAddPoints}> Добавить очки </button>
       <p>Points: {points}</p>
     </div>
