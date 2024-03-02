@@ -1,65 +1,46 @@
-import { useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { database, auth } from './firebase';
-import 'firebase/database';
+// import { useEffect } from 'react';
+// import './App.css';
+
+// const tg = window.Telegram.WebApp;
+
+// function App() {
+//   useEffect(() => {
+//     tg.ready();
+//   }, []);
+
+//   const onClose = () => {
+//     tg.close();
+//   };
+
+//   return (
+//     <div className='App'>
+//       Work <button onClick={onClose}> Закрыть </button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+import React from 'react';
 import './App.css';
+import { db } from './firebase';
 
-const tg = window.Telegram.WebApp;
+class YourComponent extends React.Component {
+  addPoints = () => {
+    const userId = 'NrobtNyV-_6raesfRnT';
 
-function App() {
-  const [userId, setUserId] = useState(null);
-  const [points, setPoints] = useState(0);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-
-        const userRef = database.ref(`users/${user.uid}`);
-        const pointsRef = userRef.child('points');
-
-        // Отслеживаем изменения в количестве очков
-        pointsRef.on('value', (snapshot) => {
-          const data = snapshot.val();
-          setPoints(data || 0);
-        });
-
-        tg.ready();
-      }
-    });
-
-    return () => {
-      if (userId) {
-        database.ref(`users/${userId}/points`).off();
-      }
-    };
-  }, [userId]);
-
-  const onStartGame = () => {
-    // Дополнительная логика начала игры
-    // Например, отправка сообщения, подготовка игровых данных и т.д.
-    // Здесь можно обновить данные в базе данных, если это необходимо
-    // Например, установить флаг начала игры
+    db.ref(`users/${userId}/points`).transaction(
+      (currentPoints) => (currentPoints || 0) + 1
+    );
   };
 
-  const onAddPoints = () => {
-    // Увеличиваем поинты при нажатии на кнопку
-    if (userId) {
-      const userRef = database.ref(`users/${userId}`);
-      const pointsRef = userRef.child('points');
-
-      // Транзакция для безопасного изменения значения поинтов
-      pointsRef.transaction((currentPoints) => (currentPoints || 0) + 1);
-    }
-  };
-
-  return (
-    <div className='App'>
-      Work <button onClick={onStartGame}> Играть </button>
-      <button onClick={onAddPoints}> Добавить очки </button>
-      <p>Points: {points}</p>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <button onClick={this.addPoints}>Добавить Points</button>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default YourComponent;
