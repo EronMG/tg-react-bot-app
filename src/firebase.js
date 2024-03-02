@@ -20,8 +20,8 @@
 // export { auth, database, firebaseApp as default };
 
 // firebase.js
-import firebase from 'firebase/app';
-import 'firebase/database';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA9hto2IWB71p6yHEXZcsmtKfxJd5Is93E',
