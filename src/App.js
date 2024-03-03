@@ -1,46 +1,78 @@
-// import { useEffect } from 'react';
-// import './App.css';
-
-// const tg = window.Telegram.WebApp;
-
-// function App() {
-//   useEffect(() => {
-//     tg.ready();
-//   }, []);
-
-//   const onClose = () => {
-//     tg.close();
-//   };
-
-//   return (
-//     <div className='App'>
-//       Work <button onClick={onClose}> Закрыть </button>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-import React from 'react';
+import { useEffect } from 'react';
 import './App.css';
-import { db } from './firebase';
+import Frinends from './assets/Friends.svg';
+import Rating from './assets/Rating.svg';
+import Store from './assets/Store.svg';
+import Tasks from './assets/Tasks.svg';
+import Dots from './assets/Dots.svg';
+import Exit from './assets/Exit.svg';
+import Diamond from './assets/Diamond.svg';
 
-class YourComponent extends React.Component {
-  addPoints = () => {
-    const userId = 'NrobtNyV-_6raesfRnT';
+const tg = window.Telegram.WebApp;
 
-    db.ref(`users/${userId}/points`).transaction(
-      (currentPoints) => (currentPoints || 0) + 1
-    );
+function App() {
+  useEffect(() => {
+    tg.ready();
+  }, []);
+
+  const onClose = () => {
+    tg.close();
   };
 
-  render() {
-    return (
-      <div>
-        <button onClick={this.addPoints}>Добавить Points</button>
+  const navArr = [
+    {
+      icon: Frinends,
+    },
+    {
+      icon: Rating,
+    },
+    {
+      icon: Store,
+    },
+    {
+      icon: Tasks,
+    },
+  ];
+
+  return (
+    <section className='App'>
+      <header className='Header'>
+        <div className='Header__container'>
+          <h1>Flag Token</h1>
+          <div className='Header__buttons'>
+            <img src={Dots} alt='Dots' className='Header__buttons_dots' />
+            <img
+              src={Exit}
+              alt='exit'
+              onClick={onClose}
+              className='Header__buttons_exit'
+            />
+          </div>
+        </div>
+        <div className='Main__energy'>
+          <p>
+            ⚡535(+1)/<span className='Main__energy_span'>555</span>
+          </p>
+          <div className='Main__energy_full'>
+            <div className='Main__energy_usefull'></div>
+          </div>
+        </div>
+      </header>
+      <div className='Main'>
+        <div className='Main__container'>
+          <h2>💎 555.555</h2>
+          <img src={Diamond} alt='Diamond' />
+        </div>
       </div>
-    );
-  }
+      <nav className='Footer'>
+        {navArr.map((item, index) => (
+          <div key={index} className='Footer__container'>
+            <img src={item.icon} alt='icons' />
+          </div>
+        ))}
+      </nav>
+    </section>
+  );
 }
 
-export default YourComponent;
+export default App;

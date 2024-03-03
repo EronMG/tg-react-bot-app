@@ -21,6 +21,7 @@
 
 // firebase.js
 import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 import 'firebase/compat/database';
 
 const firebaseConfig = {
@@ -36,4 +37,26 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+export const auth = firebase.auth();
 export const db = firebase.database();
+
+// Проверка аутентификации пользователя
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // Пользователь аутентифицирован
+    const userId = user.uid;
+
+    // Пример: обновление данных в базе данных с использованием транзакции
+    db.ref(`users/${userId}/points`)
+      .transaction((currentPoints) => (currentPoints || 0) + 1)
+      .then(() => {
+        console.log('Points updated successfully!');
+      })
+      .catch((error) => {
+        console.error('Error updating points:', error);
+      });
+  } else {
+    // Пользователь не аутентифицирован, выполните необходимые действия (например, показ формы входа)
+    console.log('User is not authenticated.');
+  }
+});
