@@ -253,6 +253,15 @@ body {
   padding: 5px 10px 10px 10px;
 }
 
+.Shop__section {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 70vh;
+  padding: 5px 10px 10px 10px;
+}
+
 .Rating__container {
   width: 100%;
   display: flex;
@@ -372,4 +381,54 @@ body {
   color: white;
   font-weight: 700;
   font-style: normal;
+}
+
+.Modal {
+  display: flex;
+  flex-flow: column;
+  gap: 64px;
+  align-items: center;
+  background: #000;
+}
+
+.Modal__container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.Modal__container_count {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.Modal__container_title {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.Modal__container_title div {
+  width: 150px;
+  height: 150px;
+  background-color: antiquewhite;
+  box-shadow: 1px 0px 120px 0px #e2f4fd;
+  margin-bottom: 5px;
+}
+
+.Modal__container_title h2 {
+  font-size: 24px;
+  color: #e2f4fd;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.Modal__container_title p {
+  font-size: 12px;
+  color: #e2f4fd;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
 }

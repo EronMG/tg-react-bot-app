@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import '../App.css';
 import Arrow from '../assets/Arrow-left.svg';
 import Dots from '../assets/Dots.svg';
 import Exit from '../assets/Exit.svg';
 import ArrowRight from '../assets/RightArrow.svg';
 import { PageContext } from '../context/Pages';
+import ModalElement from './Modal';
 
 const friendsArr = Array.from({ length: 10 }, () => ({
   name: '@Nickname',
@@ -18,9 +19,16 @@ const Shop = () => {
   const { handleExit } = useContext(PageContext);
 
   const onClose = () => tg.close();
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
-    <section className='Friends__section'>
+    <section className='Shop__section'>
       <header className='Header'>
         <div className='Header__container'>
           <div className='Header__container_left'>
@@ -67,13 +75,24 @@ const Shop = () => {
           <div className='Button__content'>
             <div className='Button__content_img' />
             <div className='Button__release'>
-              <p>Очки рейтинга</p>
+              <p onClick={openModal}>Очки рейтинга</p>
               <span>Преврать алмазы в рейтинг</span>
             </div>
           </div>
           <img src={ArrowRight} alt='icon' />
         </button>
       </div>
+      <ModalElement
+        elements={'ewrwe'}
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        name={'Очки рейтинга'}
+        title={
+          'Конвертируйте ваши алмазы в очки рейтинга с соотношением 1 к  1. Чем больше очков рейтинга, тем выше лига'
+        }
+        coins={'💎555.555'}
+        button={'Купить'}
+      />
     </section>
   );
 };
