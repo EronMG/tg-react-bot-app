@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import Frinends from './assets/Friends.svg';
 import Rating from './assets/Rating.svg';
@@ -14,7 +14,7 @@ import RatingBlock from './components/Rating';
 const tg = window.Telegram.WebApp;
 
 function App() {
-  const { page, handlePage, handleExit } = useContext(PageContext);
+  const { page, handlePage } = useContext(PageContext);
 
   useEffect(() => {
     tg.ready();
