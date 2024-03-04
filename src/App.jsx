@@ -11,6 +11,7 @@ import Invite from './components/Invite';
 import { PageContext } from './context/Pages';
 import { useContext } from 'react';
 import RatingBlock from './components/Rating';
+import Shop from './components/Shop';
 const tg = window.Telegram.WebApp;
 
 function App() {
@@ -32,10 +33,10 @@ function App() {
       icon: Rating,
     },
     {
-      icon: Store,
+      icon: Tasks,
     },
     {
-      icon: Tasks,
+      icon: Store,
     },
   ];
 
@@ -45,6 +46,8 @@ function App() {
         <Invite />
       ) : page === 1 ? (
         <RatingBlock />
+      ) : page === 3 ? (
+        <Shop />
       ) : (
         <section className='App'>
           <header className='Header'>
