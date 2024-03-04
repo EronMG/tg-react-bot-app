@@ -7,12 +7,6 @@ import ArrowRight from '../assets/RightArrow.svg';
 import { PageContext } from '../context/Pages';
 import ModalElement from './Modal';
 
-const friendsArr = Array.from({ length: 10 }, () => ({
-  name: '@Nickname',
-  tokens: '555',
-  image: '',
-}));
-
 const tg = window.Telegram.WebApp;
 
 const Shop = () => {
